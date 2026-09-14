@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>El Almacén de Sonrisas | Cotillón, Repostería y Librería en La Perlita, Moreno</title>
 <meta name="description" content="Cotillón, repostería y librería en La Perlita, Moreno. Globos, velas, descartables, insumos para tortas, productos para celíacos y útiles escolares. Armá tu lista por WhatsApp: retirás o te lo llevamos.">
-<link rel="canonical" href="https://elalmacendesonrisas.vercel.app/">
+<link rel="canonical" href="https://almacen-sonrisas.vercel.app/">
 <meta name="theme-color" content="#c8177f">
 <meta name="robots" content="index, follow">
 
@@ -14,8 +14,8 @@
 <meta property="og:site_name" content="El Almacén de Sonrisas">
 <meta property="og:title" content="El Almacén de Sonrisas · Cotillón, repostería y librería en Moreno">
 <meta property="og:description" content="Todo para el cumple, la torta y la mochila. En La Perlita desde 2017. Armá tu lista y mandala por WhatsApp.">
-<meta property="og:url" content="https://elalmacendesonrisas.vercel.app/">
-<meta property="og:image" content="https://elalmacendesonrisas.vercel.app/assets/img/og.jpg">
+<meta property="og:url" content="https://almacen-sonrisas.vercel.app/">
+<meta property="og:image" content="https://almacen-sonrisas.vercel.app/assets/img/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="El Almacén de Sonrisas, cotillón, repostería y librería en La Perlita, Moreno">
@@ -36,13 +36,13 @@
 {
   "@context": "https://schema.org",
   "@type": "Store",
-  "@id": "https://elalmacendesonrisas.vercel.app/#negocio",
+  "@id": "https://almacen-sonrisas.vercel.app/#negocio",
   "name": "El Almacén de Sonrisas",
   "alternateName": "El Almacén de Sonrisas - Cotillón, Repostería y Librería",
   "description": "Cotillón, repostería y librería en La Perlita, Moreno. Artículos de fiesta, insumos de repostería, productos para celíacos y útiles escolares.",
-  "url": "https://elalmacendesonrisas.vercel.app/",
-  "logo": "https://elalmacendesonrisas.vercel.app/assets/img/logo.png",
-  "image": "https://elalmacendesonrisas.vercel.app/assets/img/fachada-1600.webp",
+  "url": "https://almacen-sonrisas.vercel.app/",
+  "logo": "https://almacen-sonrisas.vercel.app/assets/img/logo.png",
+  "image": "https://almacen-sonrisas.vercel.app/assets/img/fachada-1600.webp",
   "telephone": "+54 11 2877-5431",
   "priceRange": "$",
   "foundingDate": "2017-06-06",
@@ -97,7 +97,7 @@
       <span class="brand__txt"><small>El Almacén de</small>Sonrisas</span>
     </a>
     <nav class="nav" id="menu" aria-label="Principal">
-      <a href="#gondolas">Góndolas</a>
+      <a href="#catalogo">Catálogo</a>
       <a href="#lista">Tu lista</a>
       <a href="#reposteria">Repostería</a>
       <a href="#nosotros">Nosotros</a>
@@ -215,6 +215,33 @@
         </div>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO (se edita desde /admin) ============ -->
+<section class="section section--crema2" id="catalogo">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="kicker">Catálogo</p>
+      <h2>Lo que hay en el almacén.</h2>
+      <p>Una muestra de lo que tenemos en las góndolas. Sumá lo que te interesa a tu lista y te confirmamos stock y precio por WhatsApp.</p>
+    </header>
+    <div class="cat-bar">
+      <div class="cat-filtros" role="group" aria-label="Filtrar por rubro">
+        <button type="button" class="is-on" data-filter="todo" aria-pressed="true">Todo</button>
+        <button type="button" data-filter="cotillon" aria-pressed="false">Cotillón</button>
+        <button type="button" data-filter="reposteria" aria-pressed="false">Repostería</button>
+        <button type="button" data-filter="libreria" aria-pressed="false">Librería</button>
+        <button type="button" data-filter="oferta" aria-pressed="false" hidden>Ofertas</button>
+      </div>
+      <label class="cat-buscar"><span class="sr">Buscar en el catálogo</span><input type="search" placeholder="Buscar: velas, cobertura, cuaderno…" data-cat-search autocomplete="off"></label>
+    </div>
+    <div class="cat-grid" data-cat-grid aria-live="polite"><p class="cat-msg">Cargando el catálogo…</p></div>
+    <div class="cat-pie">
+      <button class="btn btn--line" type="button" data-cat-mas hidden>Ver más productos</button>
+      <a class="btn btn--mag" href="#tu-lista" data-cat-resumen hidden><span>Ver mi lista (<span data-n>0</span>)</span></a>
+    </div>
+    <p class="cat-nota" data-cat-nota hidden></p>
   </div>
 </section>
 
@@ -513,7 +540,7 @@
     </div>
     <nav aria-label="Secciones">
       <h4>El almacén</h4>
-      <a href="#gondolas">Góndolas</a><a href="#lista">Armá tu lista</a><a href="#reposteria">Repostería</a><a href="#nosotros">Nosotros</a><a href="#preguntas">Preguntas</a>
+      <a href="#gondolas">Góndolas</a><a href="#catalogo">Catálogo</a><a href="#lista">Armá tu lista</a><a href="#reposteria">Repostería</a><a href="#nosotros">Nosotros</a><a href="#preguntas">Preguntas</a>
     </nav>
     <div>
       <h4>Contacto</h4>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel · El Almacén de Sonrisas</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2b1331">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:opsz,wght,SOFT@9..144,700..900,100&family=Fredoka:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="top__in">
+    <a class="top__brand" href="../" target="_blank" rel="noopener" title="Ver la web">
+      <img src="../assets/img/logo.webp" width="44" height="44" alt="">
+      <span><small>El Almacén de Sonrisas</small>Panel del catálogo</span>
+    </a>
+    <div class="top__acts" data-sesion hidden>
+      <span class="estado" data-estado>Todo publicado</span>
+      <button class="btn btn--line btn--sm" type="button" data-descartar hidden>Descartar</button>
+      <button class="btn btn--mag" type="button" data-publicar disabled>Publicar cambios</button>
+      <details class="menu">
+        <summary aria-label="Más opciones"><span></span><span></span><span></span></summary>
+        <div class="menu__pop">
+          <a href="../#catalogo" target="_blank" rel="noopener">Ver la web</a>
+          <button type="button" data-copia>Descargar copia del catálogo</button>
+          <button type="button" data-salir>Cerrar sesión</button>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- ============ INGRESO ============ -->
+  <section class="login" data-view="login" hidden>
+    <div class="card login__card">
+      <h1>Entrar al panel</h1>
+      <p>Desde acá cargás, editás y sacás productos del catálogo de la web. Los cambios se publican solos en 1 o 2 minutos.</p>
+      <form data-login autocomplete="off">
+        <label class="campo">
+          <span>Código de acceso</span>
+          <input type="password" name="token" placeholder="github_pat_…" required spellcheck="false" autocapitalize="off">
+        </label>
+        <label class="check"><input type="checkbox" name="recordar" checked> <span>Recordarme en este dispositivo</span></label>
+        <p class="error" data-login-error hidden></p>
+        <button class="btn btn--mag btn--block" type="submit">Entrar</button>
+      </form>
+      <details class="ayuda">
+        <summary>¿Cómo consigo el código?</summary>
+        <ol>
+          <li>Entrá a GitHub con la cuenta de la agencia y abrí <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">crear un token nuevo</a>.</li>
+          <li>Ponele de nombre <em>Panel Almacén de Sonrisas</em> y elegí la duración más larga.</li>
+          <li>En <em>Repository access</em> elegí <em>Only select repositories</em> → <strong>Almacen-sonrisas</strong>.</li>
+          <li>En <em>Permissions → Repository permissions</em>, poné <strong>Contents</strong> en <strong>Read and write</strong>.</li>
+          <li>Tocá <em>Generate token</em>, copiá el código (empieza con <code>github_pat_</code>) y pegalo acá.</li>
+        </ol>
+        <p>El código sirve de contraseña: no lo compartas ni lo mandes por redes.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ CARGANDO ============ -->
+  <section class="cargando" data-view="cargando" hidden>
+    <span class="spinner" aria-hidden="true"></span>
+    <p>Cargando el catálogo…</p>
+  </section>
+
+  <!-- ============ PANEL ============ -->
+  <section class="panel" data-view="panel" hidden>
+    <div class="panel__head">
+      <div>
+        <h1>Catálogo</h1>
+        <p data-resumen></p>
+      </div>
+      <button class="btn btn--nar" type="button" data-nuevo>+ Nuevo producto</button>
+    </div>
+
+    <div class="card ajustes">
+      <label class="switch">
+        <input type="checkbox" data-precios>
+        <span aria-hidden="true"></span>
+        <em>Mostrar precios en la web</em>
+      </label>
+      <p class="ajustes__ayuda">Si está apagado, cada producto dice "Consultá el precio". Si lo prendés, los productos sin precio siguen diciendo eso.</p>
+    </div>
+
+    <div class="filtros">
+      <label class="buscar"><span class="sr">Buscar</span><input type="search" placeholder="Buscar producto…" data-buscar autocomplete="off"></label>
+      <label class="sel"><span class="sr">Rubro</span>
+        <select data-filtro-cat>
+          <option value="">Todos los rubros</option>
+          <option value="cotillon">Cotillón</option>
+          <option value="reposteria">Repostería</option>
+          <option value="libreria">Librería</option>
+        </select>
+      </label>
+    </div>
+    <p class="nota-orden" data-nota-orden hidden>Para cambiar el orden, borrá la búsqueda y el filtro.</p>
+
+    <ul class="productos" data-lista></ul>
+  </section>
+</main>
+
+<!-- ============ EDITOR ============ -->
+<dialog class="editor" data-editor aria-labelledby="editor-titulo">
+  <form method="dialog" data-editor-form novalidate>
+    <header class="editor__head">
+      <h2 id="editor-titulo" data-editor-titulo>Nuevo producto</h2>
+      <button class="cerrar" type="button" data-editor-cancelar aria-label="Cerrar">×</button>
+    </header>
+
+    <div class="editor__body">
+      <div class="foto">
+        <div class="foto__prev" data-foto-prev><span>Sin foto</span></div>
+        <div class="foto__acts">
+          <label class="btn btn--line btn--sm foto__subir">
+            <input type="file" name="foto" accept="image/*" data-foto-input>
+            <span data-foto-txt>Subir foto</span>
+          </label>
+          <button class="link" type="button" data-foto-quitar hidden>Quitar foto</button>
+          <p class="foto__ayuda">Cuadrada queda mejor. Se achica sola antes de subirla.</p>
+        </div>
+      </div>
+
+      <label class="campo">
+        <span>Nombre *</span>
+        <input type="text" name="nombre" maxlength="80" required placeholder="Ej: Velas número">
+      </label>
+
+      <div class="fila2">
+        <label class="campo">
+          <span>Rubro</span>
+          <select name="categoria">
+            <option value="cotillon">Cotillón</option>
+            <option value="reposteria">Repostería</option>
+            <option value="libreria">Librería</option>
+          </select>
+        </label>
+        <label class="campo">
+          <span>Precio (opcional)</span>
+          <input type="number" name="precio" min="0" step="1" inputmode="numeric" placeholder="Vacío = Consultá el precio">
+        </label>
+      </div>
+
+      <label class="campo">
+        <span>Descripción corta</span>
+        <textarea name="descripcion" rows="3" maxlength="180" placeholder="Qué es, medidas, colores… (hasta 180 letras)"></textarea>
+      </label>
+
+      <label class="campo">
+        <span>Etiqueta</span>
+        <select name="etiqueta">
+          <option value="">Sin etiqueta</option>
+          <option value="oferta">Oferta</option>
+          <option value="nuevo">Nuevo</option>
+          <option value="temporada">De temporada</option>
+        </select>
+      </label>
+
+      <div class="fila2">
+        <label class="switch"><input type="checkbox" name="disponible" checked><span aria-hidden="true"></span><em>Hay stock</em></label>
+        <label class="switch"><input type="checkbox" name="destacado"><span aria-hidden="true"></span><em>Destacado (sale primero)</em></label>
+      </div>
+
+      <p class="error" data-editor-error hidden></p>
+    </div>
+
+    <footer class="editor__pie">
+      <button class="btn btn--line" type="button" data-editor-cancelar>Cancelar</button>
+      <button class="btn btn--mag" type="submit">Guardar producto</button>
+    </footer>
+  </form>
+</dialog>
+
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+
+<script src="admin.js" defer></script>
+</body>
+</html>

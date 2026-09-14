@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /insumos/
+Disallow: /admin/
 
-Sitemap: https://elalmacendesonrisas.vercel.app/sitemap.xml
+Sitemap: https://almacen-sonrisas.vercel.app/sitemap.xml

@@ -25,6 +25,31 @@ insumos/              material fuente y ANALISIS.md (no se indexa)
 - SEO local: title y description con Moreno y La Perlita, schema `Store` con horarios y coordenadas,
   schema `FAQPage`, Open Graph, sitemap y robots.
 
+## Panel de administración (`/admin`)
+
+El catálogo de la web sale de `data/catalogo.json`. Desde `/admin` se cargan, editan, ordenan y
+borran productos, con foto, rubro, precio opcional, etiqueta (oferta, nuevo, de temporada), stock y
+destacado. También se prende o apaga "Mostrar precios en la web".
+
+**Cómo guarda:** no hay base de datos. "Publicar cambios" hace un commit en este mismo repo (el
+catálogo más las fotos nuevas, achicadas a 1000 px en webp) y Vercel republica la web sola en 1 o 2
+minutos. Cada publicación queda en el historial de GitHub, así que cualquier cambio se puede deshacer.
+Las fotos que ningún producto usa se borran solas de `assets/catalogo/`.
+
+**Acceso:** el panel pide un token de GitHub de acceso fino (fine-grained):
+1. <https://github.com/settings/personal-access-tokens/new> con la cuenta dueña del repo.
+2. Repository access → *Only select repositories* → **Almacen-sonrisas**.
+3. Permissions → Repository permissions → **Contents: Read and write**. Nada más.
+4. Duración: la más larga disponible. Cuando vence, se genera otro y se vuelve a pegar.
+
+El token queda guardado solo en el navegador de quien lo pega (nunca en el código). Sin token,
+`/admin` no puede leer ni escribir nada. Si se filtra, se revoca desde la misma página de GitHub.
+
+Si la cuenta de GitHub, el repo o la rama cambian, editar `CFG` al principio de `admin/admin.js`.
+
+**Borrador:** los cambios sin publicar quedan guardados en el navegador. Si se cierra la pestaña,
+al volver el panel ofrece recuperarlos.
+
 ## Referencias de diseño
 
 Se analizaron Meri Meri, Fancy Sprinkles y Oh Happy Day antes de diseñar. El detalle de qué se tomó
@@ -43,7 +68,7 @@ de cada una está en `insumos/ANALISIS.md`.
    interior y de productos para reemplazar y sumar.
 5. **Imagen para compartir** (`assets/img/og.jpg`): generada a partir del hero.
 6. **Dominio**: las URLs absolutas (canonical, OG, schema, sitemap, robots) apuntan a
-   `https://elalmacendesonrisas.vercel.app/`. Si se compra dominio, reemplazarlas todas.
+   `https://almacen-sonrisas.vercel.app/`. Si se compra dominio, reemplazarlas todas.
 
 ## Deploy
 

@@ -1,0 +1,116 @@
+{
+  "actualizado": "2026-09-14",
+  "mostrarPrecios": false,
+  "productos": [
+    {
+      "id": "p-snacks-fiesta",
+      "nombre": "Snacks para fiestas",
+      "categoria": "cotillon",
+      "descripcion": "Pochoclo, palitos de queso, bolitas dulces, copos de maíz y bastoncitos salados. Ideal para cumples, picadas y eventos.",
+      "precio": null,
+      "etiqueta": "nuevo",
+      "disponible": true,
+      "destacado": true,
+      "foto": ""
+    },
+    {
+      "id": "p-toppers-unicornio",
+      "nombre": "Toppers de unicornio y arcoíris",
+      "categoria": "reposteria",
+      "descripcion": "Para coronar la torta. Consultanos por otros personajes y temáticas.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": true,
+      "foto": "assets/img/toppers.webp"
+    },
+    {
+      "id": "p-cobertura-aguila",
+      "nombre": "Cobertura de chocolate Águila de colores",
+      "categoria": "reposteria",
+      "descripcion": "Rosa y celeste, para bañar tortas, frutas y paletas y salir del marrón de siempre.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-crema-ledevit",
+      "nombre": "Crema Ledevit x 1 L",
+      "categoria": "reposteria",
+      "descripcion": "Vainilla y chantilly, para rellenar y decorar.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-polvo-pintar",
+      "nombre": "Polvo para pintar nacarado y pastel",
+      "categoria": "reposteria",
+      "descripcion": "Importado, estilo italiano. Se usa directo o diluido, con pincel o aerógrafo.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-budineras",
+      "nombre": "Budineras de aluminio",
+      "categoria": "reposteria",
+      "descripcion": "Descartables, en varias medidas. También por paquete.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": "assets/img/budineras.webp"
+    },
+    {
+      "id": "p-sin-tacc",
+      "nombre": "Productos para celíacos",
+      "categoria": "reposteria",
+      "descripcion": "Opciones sin TACC para la repostería. Consultá qué hay esta semana.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-globos",
+      "nombre": "Globos y globos número",
+      "categoria": "cotillon",
+      "descripcion": "Lisos, estampados y números para la edad del cumpleañero.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-velas",
+      "nombre": "Velas y bengalas",
+      "categoria": "cotillon",
+      "descripcion": "Velas de números, velitas clásicas y bengalas para la torta.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    },
+    {
+      "id": "p-utiles",
+      "nombre": "Útiles escolares",
+      "categoria": "libreria",
+      "descripcion": "Cuadernos, lápices, fibras, cartulinas y todo para la lista del cole.",
+      "precio": null,
+      "etiqueta": "",
+      "disponible": true,
+      "destacado": false,
+      "foto": ""
+    }
+  ]
+}
