@@ -45,31 +45,21 @@
     <div class="card login__card">
       <h1>Entrar al panel</h1>
       <p>Desde acá cargás, editás y sacás productos del catálogo de la web. Los cambios se publican solos en 1 o 2 minutos.</p>
-      <form data-login autocomplete="off">
+      <form data-login autocomplete="on">
+        <input type="text" name="usuario" value="almacen" autocomplete="username" hidden>
         <label class="campo">
-          <span>Código de acceso</span>
-          <input type="password" name="token" placeholder="github_pat_…" required spellcheck="false" autocapitalize="off">
+          <span>Contraseña</span>
+          <input type="password" name="password" required autocomplete="current-password">
         </label>
-        <label class="check"><input type="checkbox" name="recordar" checked> <span>Recordarme en este dispositivo</span></label>
         <p class="error" data-login-error hidden></p>
         <button class="btn btn--mag btn--block" type="submit">Entrar</button>
       </form>
-      <details class="ayuda">
-        <summary>¿Cómo consigo el código?</summary>
-        <ol>
-          <li>Entrá a GitHub con la cuenta de la agencia y abrí <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">crear un token nuevo</a>.</li>
-          <li>Ponele de nombre <em>Panel Almacén de Sonrisas</em> y elegí la duración más larga.</li>
-          <li>En <em>Repository access</em> elegí <em>Only select repositories</em> → <strong>Almacen-sonrisas</strong>.</li>
-          <li>En <em>Permissions → Repository permissions</em>, poné <strong>Contents</strong> en <strong>Read and write</strong>.</li>
-          <li>Tocá <em>Generate token</em>, copiá el código (empieza con <code>github_pat_</code>) y pegalo acá.</li>
-        </ol>
-        <p>El código sirve de contraseña: no lo compartas ni lo mandes por redes.</p>
-      </details>
+      <p class="ajustes__ayuda">La sesión queda abierta 30 días en este dispositivo. ¿Te olvidaste la contraseña? Pedísela a Tu Negocio En Las Redes.</p>
     </div>
   </section>
 
   <!-- ============ CARGANDO ============ -->
-  <section class="cargando" data-view="cargando" hidden>
+  <section class="cargando" data-view="cargando">
     <span class="spinner" aria-hidden="true"></span>
     <p>Cargando el catálogo…</p>
   </section>

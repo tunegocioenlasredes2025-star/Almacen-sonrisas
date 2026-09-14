@@ -36,16 +36,27 @@ catálogo más las fotos nuevas, achicadas a 1000 px en webp) y Vercel republica
 minutos. Cada publicación queda en el historial de GitHub, así que cualquier cambio se puede deshacer.
 Las fotos que ningún producto usa se borran solas de `assets/catalogo/`.
 
-**Acceso:** el panel pide un token de GitHub de acceso fino (fine-grained):
-1. <https://github.com/settings/personal-access-tokens/new> con la cuenta dueña del repo.
-2. Repository access → *Only select repositories* → **Almacen-sonrisas**.
-3. Permissions → Repository permissions → **Contents: Read and write**. Nada más.
-4. Duración: la más larga disponible. Cuando vence, se genera otro y se vuelve a pegar.
+**Acceso:** el cliente entra con una **contraseña**. Las funciones de `api/` (Vercel) validan la
+contraseña, leen el catálogo y publican; el token de GitHub vive solo en Vercel y el navegador nunca lo
+ve. Las funciones solo pueden escribir `data/catalogo.json` y `assets/catalogo/`: con la contraseña no
+se puede tocar el resto de la web. La sesión dura 30 días (cookie HttpOnly).
 
-El token queda guardado solo en el navegador de quien lo pega (nunca en el código). Sin token,
-`/admin` no puede leer ni escribir nada. Si se filtra, se revoca desde la misma página de GitHub.
+Variables de entorno en Vercel (Settings → Environment Variables, entorno *Production*):
 
-Si la cuenta de GitHub, el repo o la rama cambian, editar `CFG` al principio de `admin/admin.js`.
+| Variable | Qué va |
+|---|---|
+| `GITHUB_TOKEN` | Token fine-grained: *Only select repositories* → **Almacen-sonrisas**, permiso **Contents: Read and write**, nada más. |
+| `PANEL_PASSWORD` | La contraseña que se le da al cliente. |
+
+Después de cargarlas o cambiarlas hay que **redeployar** (Deployments → ⋯ → Redeploy): Vercel solo las
+toma en deploys nuevos.
+
+- **Sacarle el acceso al cliente / olvidó la contraseña:** cambiar `PANEL_PASSWORD` y redeployar.
+  Cierra todas las sesiones abiertas.
+- **Vence el token:** el panel le dice al cliente "se venció la conexión". Se genera otro token, se
+  reemplaza `GITHUB_TOKEN` y se redeploya. El cliente no tiene que hacer nada.
+
+Si la cuenta de GitHub, el repo o la rama cambian, editar `REPO` en `api/_lib/panel.js`.
 
 **Borrador:** los cambios sin publicar quedan guardados en el navegador. Si se cierra la pestaña,
 al volver el panel ofrece recuperarlos.
