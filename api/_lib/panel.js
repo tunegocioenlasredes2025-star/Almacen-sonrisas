@@ -2,12 +2,20 @@
 /* Lógica compartida de las funciones del panel (/api).
    Vercel no publica como ruta los archivos que empiezan con "_", así que esto no es accesible desde afuera.
 
-   Variables de entorno (se cargan en Vercel → Settings → Environment Variables):
+   Variable de entorno (Vercel → Settings → Environment Variables):
      GITHUB_TOKEN    token fine-grained con "Contents: Read and write" SOLO sobre Almacen-sonrisas
-     PANEL_PASSWORD  contraseña con la que entra el cliente al panel
-   Cambiar PANEL_PASSWORD cierra todas las sesiones abiertas. */
+   Contraseña del panel: hash scrypt en acceso.json (se cambia con `node api/_lib/cambiar-clave.js`).
+   Opcional: PANEL_PASSWORD en Vercel pisa la de acceso.json.
+   Cambiar la contraseña cierra todas las sesiones abiertas. */
 
 const crypto = require('crypto');
+const { promisify } = require('util');
+
+const scrypt = promisify(crypto.scrypt);
+let ACCESO = null;
+try { ACCESO = require('./acceso.json'); } catch (_) { ACCESO = null; }
+// Igual que en cambiar-clave.js: sin espacios de más ni mayúsculas (el celular pone la primera en mayúscula).
+const normalizarClave = (s) => String(s || '').trim().toLowerCase().normalize('NFC');
 
 const REPO = { owner: 'tunegocioenlasredes2025-star', repo: 'Almacen-sonrisas', branch: 'main' };
 const DATA_PATH = 'data/catalogo.json';
@@ -22,8 +30,11 @@ const RUTA_FOTO = /^assets\/(img|catalogo)\/[a-z0-9._-]+\.(webp|jpe?g|png)$/i;
 
 const config = () => {
   const token = process.env.GITHUB_TOKEN;
-  const pass = process.env.PANEL_PASSWORD;
-  return token && pass ? { token, pass } : null;
+  const pass = normalizarClave(process.env.PANEL_PASSWORD);
+  const hash = ACCESO && ACCESO.hash;
+  if (!token || (!pass && !hash)) return null;
+  // "secreto" entra en la firma de la sesión: cambiar la contraseña invalida todas las cookies.
+  return { token, pass, secreto: pass || hash };
 };
 
 const esperar = (ms) => new Promise((ok) => setTimeout(ok, ms));
@@ -58,7 +69,7 @@ async function leerJSON(req, limite) {
 }
 
 /* ---------- Sesión: cookie firmada con HMAC ---------- */
-const clave = (cfg) => crypto.createHash('sha256').update(`almacen-panel\n${cfg.token}\n${cfg.pass}`).digest();
+const clave = (cfg) => crypto.createHash('sha256').update(`almacen-panel\n${cfg.token}\n${cfg.secreto}`).digest();
 const firma = (cfg, payload) => crypto.createHmac('sha256', clave(cfg)).update(payload).digest('base64url');
 
 function crearSesion(cfg) {
@@ -83,10 +94,17 @@ function sesionValida(cfg, req) {
   }
 }
 
-function passwordCorrecta(cfg, intento) {
-  const a = crypto.createHash('sha256').update(String(intento || '')).digest();
-  const b = crypto.createHash('sha256').update(cfg.pass).digest();
-  return crypto.timingSafeEqual(a, b);
+async function passwordCorrecta(cfg, intento) {
+  const txt = normalizarClave(intento);
+  if (cfg.pass) {
+    const a = crypto.createHash('sha256').update(txt).digest();
+    const b = crypto.createHash('sha256').update(cfg.pass).digest();
+    return crypto.timingSafeEqual(a, b);
+  }
+  const { N, r, p, salt, hash } = ACCESO;
+  const calculado = await scrypt(txt, Buffer.from(salt, 'hex'), 32, { N, r, p, maxmem: 256 * N * r });
+  const guardado = Buffer.from(hash, 'hex');
+  return calculado.length === guardado.length && crypto.timingSafeEqual(calculado, guardado);
 }
 
 /* ---------- Guardas ---------- */

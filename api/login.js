@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
   } catch (e) {
     return P.fallar(res, e);
   }
-  if (!P.passwordCorrecta(cfg, body.password)) {
+  if (!(await P.passwordCorrecta(cfg, body.password))) {
     await P.esperar(900); // frena a quien pruebe contraseñas al voleo
     return P.responder(res, 401, { error: 'password' });
   }

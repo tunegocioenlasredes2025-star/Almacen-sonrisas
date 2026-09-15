@@ -41,18 +41,21 @@ contraseña, leen el catálogo y publican; el token de GitHub vive solo en Verce
 ve. Las funciones solo pueden escribir `data/catalogo.json` y `assets/catalogo/`: con la contraseña no
 se puede tocar el resto de la web. La sesión dura 30 días (cookie HttpOnly).
 
-Variables de entorno en Vercel (Settings → Environment Variables, entorno *Production*):
+Una sola variable de entorno en Vercel (Settings → Environment Variables):
 
 | Variable | Qué va |
 |---|---|
 | `GITHUB_TOKEN` | Token fine-grained: *Only select repositories* → **Almacen-sonrisas**, permiso **Contents: Read and write**, nada más. |
-| `PANEL_PASSWORD` | La contraseña que se le da al cliente. |
 
-Después de cargarlas o cambiarlas hay que **redeployar** (Deployments → ⋯ → Redeploy): Vercel solo las
-toma en deploys nuevos.
+Después de cargarla o cambiarla hay que **redeployar**: Vercel solo toma las variables en deploys nuevos.
 
-- **Sacarle el acceso al cliente / olvidó la contraseña:** cambiar `PANEL_PASSWORD` y redeployar.
-  Cierra todas las sesiones abiertas.
+**Contraseña del panel:** está guardada como hash scrypt en `api/_lib/acceso.json` (el repo es público:
+por eso es larga, 5 palabras y un número). En claro está solo en `insumos/ACCESO-PANEL.txt`, que no se
+sube. Se puede escribir con o sin mayúsculas.
+
+- **Sacarle el acceso al cliente / olvidó la contraseña:** `node api/_lib/cambiar-clave.js` (inventa una
+  nueva y la muestra; o pasale una entre comillas), commit y push. Cierra todas las sesiones abiertas.
+- Opcional: una variable `PANEL_PASSWORD` en Vercel pisa la de `acceso.json`.
 - **Vence el token:** el panel le dice al cliente "se venció la conexión". Se genera otro token, se
   reemplaza `GITHUB_TOKEN` y se redeploya. El cliente no tiene que hacer nada.
 
