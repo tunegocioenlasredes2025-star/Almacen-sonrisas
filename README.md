@@ -49,9 +49,13 @@ Una sola variable de entorno en Vercel (Settings → Environment Variables):
 
 Después de cargarla o cambiarla hay que **redeployar**: Vercel solo toma las variables en deploys nuevos.
 
-**Contraseña del panel:** está guardada como hash scrypt en `api/_lib/acceso.json` (el repo es público:
-por eso es larga, 5 palabras y un número). En claro está solo en `insumos/ACCESO-PANEL.txt`, que no se
-sube. Se puede escribir con o sin mayúsculas.
+**Contraseña del panel:** está guardada como hash scrypt en `api/_lib/acceso.json`. En claro está solo
+en `insumos/ACCESO-PANEL.txt`, que no se sube. Se puede escribir con o sin mayúsculas. Ojo: el repo es
+público y el hash se ve, así que conviene una contraseña larga y que no se adivine (el script sin
+argumento inventa una de 5 palabras y un número).
+
+**Diagnóstico:** `https://almacen-sonrisas.vercel.app/api/estado` responde `{"ok":true}` si el token
+funciona; si no, dice `config` (falta la variable), `token` (venció) o `permiso` (le falta acceso).
 
 - **Sacarle el acceso al cliente / olvidó la contraseña:** `node api/_lib/cambiar-clave.js` (inventa una
   nueva y la muestra; o pasale una entre comillas), commit y push. Cierra todas las sesiones abiertas.
